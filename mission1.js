@@ -7,43 +7,39 @@ getArea('circle', results, 1, 2);
 
 printExecutionSequence();
 
-function getArea(figure, results, ...arguments) {
-    const parameters = [...arguments];
+function getArea(figure, results, a = 0, b = 0, c = 0) {
 
     if (figure === 'circle') {
-        results.push('circle');
-        results.push(getCircleArea(parameters));
+        results.push(`${figure} : ${getCircleArea(a, b)}`);
         return results;
     } else if (figure === 'rect') {
-        results.push('rect');
-        results.push(getRectArea(parameters));
+        results.push(`${figure} : ${getRectArea(a, b)}`);
         return results;
     } else if (figure === 'trapezoid') {
-        results.push('trapezoid');
-        results.push(getTrapezoidArea(parameters));
+        results.push(`${figure} : ${getTrapezoidArea(a, b, c)}`);
         return results;
     }
 }
 
-function getCircleArea(parameters) {
+function getCircleArea(radius1, radius2) {
     let result = 0;
-    if (parameters.length === 1) {
-        result = Math.PI * Math.pow(parameters[0], 2);
+    if (!radius2) {
+        result = Math.PI * Math.pow(radius1, 2);
         return result;
-    } else if (parameters.length === 2) {
-        for (let radius = parameters[0]; radius <= parameters[1]; radius++) {
+    } else {
+        for (let radius = radius1; radius <= radius2; radius++) {
             result += Math.PI * Math.pow(radius, 2);
         }
         return result;
     }
 }
 
-function getRectArea(parameters) {
-    return parameters[0] * parameters[1];
+function getRectArea(width, height) {
+    return width * height;
 }
 
-function getTrapezoidArea(parameters) {
-    return ((parameters[0] + parameters[1]) * parameters[2] / 2);
+function getTrapezoidArea(top, bottom, height) {
+    return ((top + bottom) * height / 2);
 }
 
 function printExecutionSequence() {
