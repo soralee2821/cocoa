@@ -15,7 +15,7 @@ function factorial(n) {
 }
 
 
-//2. filter array
+// 2. filter array
 const peoples = ["crong!@#", "honux5", "sarah#", "hea3d", "zello", "5lucas"];
 
 // for 문을 이용한 풀이
@@ -66,3 +66,20 @@ function deleteNumber(peopleID) {
   }
   return filteredID;
 }
+
+// 3. calculate average
+const grades = [[88,76,77], [33,44,44], [90,100,94], [30,44,98]];
+
+// calaculate the average of each student
+let averageArray = [];
+grades.forEach(function (student) {
+  let studentAverage = student.reduce((a, b) => a + b, 0) / student.length;
+  studentAverage = studentAverage.toFixed(2);
+  averageArray.push(studentAverage);
+});
+console.log("모든 학생의 평균 점수 목록 : ",averageArray);
+
+// calculate the average of maximum values of each student
+let maximumArray = grades.map((student) => Math.max(...student));
+const totalMaximumValue = maximumArray.reduce((a, b) => a + b, 0) / maximumArray.length;
+console.log("모든 학생의 최고 점수의 평균값 : ",totalMaximumValue);
