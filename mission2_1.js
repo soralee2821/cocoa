@@ -1,29 +1,29 @@
-function solution(n, t, m, p) {
-  const numberArray = getNumericalSystem(n, t);
+console.log(solution(2, 5, 3, 2));
+
+function solution(numericalSystem, numberCount, totalPlayers, gildongOrder) {
+  const numberArray = getNumberArray(numericalSystem, numberCount);
   return {
     totalNumber : numberArray,
-    gildong : findGildong(m, p, numberArray)
+    gildong : findGildongNumber(totalPlayers, gildongOrder, numberArray)
   };
 }
 
-function getNumericalSystem(n, t) {
+function getNumberArray(numericalSystem, numberCount) {
   let numberArray = [];
 
-  for (let number = 1; number <= t; number++) {
-    let convertedNumber = number.toString(n);
+  for (let number = 1; number <= numberCount; number++) {
+    let convertedNumber = number.toString(numericalSystem);
     convertedNumber = convertedNumber.split('');
     numberArray.push(...convertedNumber);
   }
   return numberArray;
 }
 
-function findGildong(m, p, numberArray) {
+function findGildongNumber(totalPlayers, gildongOrder, numberArray) {
   let gildongNumber = [];
 
-  numberArray.forEach((element, index) => {
-    if ((index + 1) % m === p) gildongNumber.push(element);
+  numberArray.forEach((number, index) => {
+    if ((index + 1) % totalPlayers === gildongOrder) gildongNumber.push(number);
   })
   return gildongNumber;
 }
-
-console.log(solution(2, 5, 3, 2));
