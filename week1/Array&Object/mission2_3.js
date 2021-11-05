@@ -1,38 +1,14 @@
-const data = {
-    "debug": "on",
-    "window": {
-        "title": "Sample Konfabulator Widget",
-        "name": "main_window",
-        "width": 500,
-        "height": 500
-    },
-    "image": { 
-        "src": "Images/Sun.png",
-        "name": "sun1",
-        "hOffset": 250,
-        "vOffset": 250,
-        "alignment": "center"
-    },
-    "text": {
-        "data": "Click Here",
-        "size": 36,
-        "style": "bold",
-        "name": "text1",
-        "hOffset": 250,
-        "vOffset": 100,
-        "alignment": "center",
-        "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
-    }
-}
+// 3. calculate average
+const grades = [[88,76,77], [33,44,44], [90,100,94], [30,44,98]];
 
-let numberAttribute = [];
+let averageArray = [];
+grades.forEach(function (student) {
+  let studentAverage = student.reduce((a, b) => a + b, 0) / student.length;
+  studentAverage = studentAverage.toFixed(2);
+  averageArray.push(studentAverage);
+});
+console.log("모든 학생의 평균 점수 목록 : ",averageArray);
 
-for (let dataType in data) {
-    for (const [key, value] of Object.entries(data[dataType])) {
-        if (typeof value === "number") {
-            numberAttribute.push(key);
-        }
-    }
-}
-
-console.log(numberAttribute);
+let maximumArray = grades.map((student) => Math.max(...student));
+const totalMaximumValue = maximumArray.reduce((a, b) => a + b, 0) / maximumArray.length;
+console.log("모든 학생의 최고 점수의 평균값 : ",totalMaximumValue);
