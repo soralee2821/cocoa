@@ -26,17 +26,13 @@ const data = {
 }
 
 let numberAttribute = [];
-//Object.keys(object).find(key => object[key] === value);??
+
 for (let dataType in data) {
-    for (let attiribute in data[dataType]) {
-        if (typeof data[dataType][attiribute] === "number") {
-            numberAttribute.push(...getKeyByValue(data[dataType] ,data[dataType][attiribute]));
+    for (const [key, value] of Object.entries(data[dataType])) {
+        if (typeof value === "number") {
+            numberAttribute.push(key);
         }
     }
-}
-
-function getKeyByValue(object, value) {
-    return Object.keys(object).filter(key => object[key] === value);
 }
 
 console.log(numberAttribute);
