@@ -86,22 +86,27 @@ checkObject(data);
 console.log(SKNameList);
 
 function checkObject(object) {
+	findSKName(object);
     for (const value of Object.values(object)) {
         if (typeof value === "object") {
             if (Array.isArray(value)) {
                 const flattenArray = value.flat();
-                return checkObject(flattenArray);
+				flattenArray.forEach((element) => {
+					if (typeof element === "object") {
+						checkObject(element);
+					}
+				});
             } else {
                 return checkObject(value);
             }
-        } else {
-            findSKName(object);
         }
     }
 }
 
 function findSKName(object) {
     if (object["type"] === "sk") {
-        SKNameList.push(object["name"]);
+		if (object.hasOwnProperty("name")) {
+			SKNameList.push(object["name"]);
+		}
     }
 }
