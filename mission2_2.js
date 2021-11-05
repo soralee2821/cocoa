@@ -18,7 +18,7 @@ function factorial(n) {
 // 2. filter array
 const peoples = ["crong!@#", "honux5", "sarah#", "hea3d", "zello", "5lucas"];
 
-// for 문을 이용한 풀이
+/* for 문을 이용한 풀이
 let peopleArray = [];
 
 for (let peopleID of peoples) {
@@ -31,17 +31,15 @@ for (let peopleID of peoples) {
 console.log(peopleArray);
 
 // filter, map을 이용한 풀이
-let filteredPeoples = peoples.filter(function (peopleID) {
-  const regExp = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
-  if (regExp.test(peopleID)) return false;
-  else return true;
-});
-filteredPeoples = filteredPeoples.map((peopleID) => peopleID.replace(/[0-9]/g,""));
+const regExp = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+let filteredPeoples = peoples.filter((peopleID) => {
+  return regExp.test(peopleID) ? false : true;
+}).map((peopleID) => peopleID.replace(/[0-9]/g,""));
 console.log(filteredPeoples);
+*/
 
 // regExp을 이용하지 않은 풀이
-let filteredPeoples = peoples.filter((peopleID) => findSpecialChars(peopleID) === false);
-filteredPeoples = filteredPeoples.map(deleteNumber);
+let filteredPeoples = peoples.filter((peopleID) => findSpecialChars(peopleID) === false).map(deleteNumber);
 console.log(filteredPeoples);
 
 function findSpecialChars(peopleID) {
@@ -66,7 +64,6 @@ function deleteNumber(peopleID) {
   }
   return filteredID;
 }
-
 
 // 3. calculate average
 const grades = [[88,76,77], [33,44,44], [90,100,94], [30,44,98]];
