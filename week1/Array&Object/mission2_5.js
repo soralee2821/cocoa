@@ -81,32 +81,32 @@ const data = [{
 
 let SKNameList = [];
 
-checkObject(data);
+checkData(data);
 
 console.log(SKNameList);
 
-function checkObject(object) {
-	findSKName(object);
-    for (const value of Object.values(object)) {
-        if (typeof value === "object") {
-            if (Array.isArray(value)) {
-                const flattenArray = value.flat();
-				flattenArray.forEach((element) => {
-					if (typeof element === "object") {
-						checkObject(element);
-					}
-				});
-            } else {
-                return checkObject(value);
-            }
-        }
-    }
+function checkData(data) {
+	findSKName(data);
+	findObject(data);
 }
 
 function findSKName(object) {
     if (object["type"] === "sk") {
 		if (object.hasOwnProperty("name")) {
-			SKNameList.push(object["name"]);
+			return SKNameList.push(object["name"]);
 		}
+    }
+	return;
+}
+
+function findObject(object) {
+    for (const value of Object.values(object)) {
+        if (typeof value === "object") {
+            if (Array.isArray(value)) {
+				value.forEach(checkData);
+            } else {
+				return checkData(value);
+            }
+        }
     }
 }
