@@ -28,11 +28,11 @@ const data = {
 let numberAttribute = [];
 
 for (let dataType in data) {
-    for (const [key, value] of Object.entries(data[dataType])) {
-        if (typeof value === "number") {
-            numberAttribute.push(key);
-        }
+  for (const [key, value] of Object.entries(data[dataType])) {
+    if (typeof value === "number") {
+      numberAttribute.push(key);
     }
+  }
 }
 
 console.log(numberAttribute);

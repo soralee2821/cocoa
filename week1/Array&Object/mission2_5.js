@@ -91,22 +91,22 @@ function checkData(data) {
 }
 
 function findSKName(object) {
-    if (object["type"] === "sk") {
+	if (object["type"] === "sk") {
 		if (object.hasOwnProperty("name")) {
 			return SKNameList.push(object["name"]);
 		}
-    }
+	}
 	return;
 }
 
 function findObject(object) {
-    for (const value of Object.values(object)) {
-        if (typeof value === "object") {
-            if (Array.isArray(value)) {
+  for (const value of Object.values(object)) {
+		if (typeof value === "object") {
+			if (Array.isArray(value)) {
 				value.forEach(checkData);
-            } else {
+			} else {
 				return checkData(value);
-            }
-        }
-    }
+			}
+		}
+	}
 }
