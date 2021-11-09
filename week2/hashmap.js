@@ -1,10 +1,11 @@
-function HashMap(size) {
-  this.storage = [];
+function HashMap(size = 23) {
+  this.storage = new Array(size);
   this.size = size;
   this.hash = function (key) {
     let hashValue = 0;
+    let primeNumber = 13;
     for (let i = 0; i < key.length; i++) {
-      hashValue += key.charCodeAt(i);
+      hashValue += primeNumber * key.charCodeAt(i);
     }
     return hashValue % this.size;
   };
@@ -31,12 +32,11 @@ HashMap.prototype.remove = function (key) {
 
 HashMap.prototype.contains = function (key) {
   let index = this.hash(key);
-  let hasKey = false;
   if (!this.storage[index]) return false;
   for (let array of this.storage[index]) {
-    hasKey = array[0] === key ? true : false;
+    if (array[0] === key) return true;
   }
-  return hasKey;
+  return false;
 }
 
 HashMap.prototype.get = function (key) {
@@ -49,14 +49,19 @@ HashMap.prototype.get = function (key) {
 
 HashMap.prototype.keys = function () {
   let keyList = [];
-  this.storage.forEach((array) => {
-    keyList.push(array[0]);
-  })
+  for (let i = 0; i < this.storage.length; i++) {
+    console.log(Array.isArray(this.storage[i]));
+    if (Array.isArray(this.storage[i])) {
+      for (let array of this.storage[i]) {
+        if (array[0]) keyList.push(array[0]);
+      }
+    }
+  }
   return keyList;
 };
 
-HashMap.prototype.isEmpty = function () {
-  console.log(this.storage);
+HashMap.prototype.clear = function () {
+  this.storage = [];
 };
 
 let map = new HashMap(5);
@@ -71,7 +76,3 @@ console.log("Is 2 in map? then delete 2! ", map.remove("2"));
 console.log("After delete 2, is 2 in map ? ", map.contains("2"));
 console.log("Regardless is 3 in map ? ", map.contains("3"));
 console.log("keys in map : ", map.keys());
-
-let map1 = new HashMap();
-console.log(map.isEmpty());
-console.log(map1.isEmpty());
