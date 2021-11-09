@@ -68,10 +68,6 @@ HashMap.prototype.keys = function () {
   return keyList;
 };
 
-HashMap.prototype.clear = function () {
-  this.hashStorage = [];
-};
-
 HashMap.prototype.replace = function (key, value) {
   let index = this.hash(key);
   if (!this.hashStorage[index]) return false;
@@ -85,6 +81,10 @@ HashMap.prototype.replace = function (key, value) {
 
 HashMap.prototype.size = function () {
   return this.hashStorage.length;
+};
+
+HashMap.prototype.clear = function () {
+  this.hashStorage = [];
 };
 
 let map = new HashMap(5);
