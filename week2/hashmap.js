@@ -1,30 +1,32 @@
 function HashMap(size = 23) {
-  this.storage = new Array(size);
+  this.hashStorage = new Array(size);
   this.size = size;
+
   this.hash = function (key) {
     let hashValue = 0;
     let primeNumber = 13;
-    for (let i = 0; i < key.length; i++) {
-      hashValue += primeNumber * key.charCodeAt(i);
-    }
-    return hashValue % this.size;
+    key.split('').forEach((keyValue) => {
+      hashValue += primeNumber * keyValue.charCodeAt();
+    });
+    hashValue = hashValue % this.size;
+    return hashValue;
   };
 };
 
 HashMap.prototype.put = function (key, value) {
   let index = this.hash(key);
-  if (!this.storage[index]) this.storage[index] = [];
-  this.storage[index].push([key, value]);
+  if (!this.hashStorage[index]) this.hashStorage[index] = [];
+  this.hashStorage[index].push([key, value]);
   return this;
 };
 
 HashMap.prototype.remove = function (key) {
   let index = this.hash(key);
-  if (!this.storage[index]) return false;
-  for (let array of this.storage[index]) {
+  if (!this.hashStorage[index]) return false;
+  for (let array of this.hashStorage[index]) {
     if (array[0] === key) {
-      const storageIndex = this.storage[index].indexOf(array);
-      this.storage[index].splice(storageIndex, 1);
+      const storageIndex = this.hashStorage[index].indexOf(array);
+      this.hashStorage[index].splice(storageIndex, 1);
       return true;
     }
   }
@@ -32,39 +34,57 @@ HashMap.prototype.remove = function (key) {
 
 HashMap.prototype.contains = function (key) {
   let index = this.hash(key);
-  if (!this.storage[index]) return false;
-  for (let array of this.storage[index]) {
-    if (array[0] === key) return true;
-  }
-  return false;
+  let hasKey = false;
+  if (!this.hashStorage[index]) return false;
+  this.hashStorage[index].forEach((arrayList) => {
+    arrayList.forEach((array) => {
+      if (array[0] === key) {
+        hasKey = true;
+      }
+    });
+  });
+  return hasKey;
 }
 
 HashMap.prototype.get = function (key) {
   let index = this.hash(key);
-  if (!this.storage[index]) return undefined;
-  for (let array of this.storage[index]) {
+  if (!this.hashStorage[index]) return undefined;
+  for (let array of this.hashStorage[index]) {
     if (array[0] === key) return array[1];
   }
 }
 
 HashMap.prototype.isEmpty = function () {
-  return this.storage.length ? false : true;
+  return this.hashStorage.length ? false : true;
 }
 
 HashMap.prototype.keys = function () {
   let keyList = [];
-  for (let i = 0; i < this.storage.length; i++) {
-    if (Array.isArray(this.storage[i])) {
-      for (let array of this.storage[i]) {
-        if (array[0]) keyList.push(array[0]);
-      }
-    }
-  }
+  this.hashStorage.forEach((ArrayList) => {
+    ArrayList.forEach((array) => {
+      if (array[0]) keyList.push(array[0]);
+    });
+  });
   return keyList;
 };
 
 HashMap.prototype.clear = function () {
-  this.storage = [];
+  this.hashStorage = [];
+};
+
+HashMap.prototype.replace = function (key, value) {
+  let index = this.hash(key);
+  if (!this.hashStorage[index]) return false;
+  this.hashStorage[index].forEach((array) => {
+    if(array[0] === key) {
+      array[1] = value;
+      return;
+    }
+  });
+};
+
+HashMap.prototype.size = function () {
+  return this.hashStorage.length;
 };
 
 let map = new HashMap(5);
@@ -74,11 +94,21 @@ map.put("location", "Seoul");
 map.put("1", 1);
 map.put("2", 2);
 map.put("3", 3);
+
+
+/*
+// examples
 console.log("is 2 in map ?", map.contains("2"));
-console.log("Is 2 in map? then delete 2! ", map.remove("2"));
-console.log("After delete 2, is 2 in map ? ", map.contains("2"));
+console.log("Is 3 in map? then delete 3! ", map.remove("3"));
 console.log("Regardless is 3 in map ? ", map.contains("3"));
+console.log(map.get("1"));
+console.log(map.get("2"));
 console.log("keys in map : ", map.keys());
 console.log(map.isEmpty());
-map.clear();
-console.log(map.isEmpty());
+//map.clear();
+//console.log(map.isEmpty());
+console.table(map.hashStorage);
+map.replace("1", "일");
+console.table(map.hashStorage);
+console.log(map.size);
+*/
