@@ -47,6 +47,10 @@ HashMap.prototype.get = function (key) {
   }
 }
 
+HashMap.prototype.isEmpty = function () {
+  return this.storage.length ? false : true;
+}
+
 HashMap.prototype.keys = function () {
   let keyList = [];
   for (let i = 0; i < this.storage.length; i++) {
@@ -75,3 +79,6 @@ console.log("Is 2 in map? then delete 2! ", map.remove("2"));
 console.log("After delete 2, is 2 in map ? ", map.contains("2"));
 console.log("Regardless is 3 in map ? ", map.contains("3"));
 console.log("keys in map : ", map.keys());
+console.log(map.isEmpty());
+map.clear();
+console.log(map.isEmpty());
