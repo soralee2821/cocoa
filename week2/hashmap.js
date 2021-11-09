@@ -50,7 +50,6 @@ HashMap.prototype.get = function (key) {
 HashMap.prototype.keys = function () {
   let keyList = [];
   for (let i = 0; i < this.storage.length; i++) {
-    console.log(Array.isArray(this.storage[i]));
     if (Array.isArray(this.storage[i])) {
       for (let array of this.storage[i]) {
         if (array[0]) keyList.push(array[0]);
