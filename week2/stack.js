@@ -4,46 +4,6 @@
 // [] 배열 분석 정보를 출력하기
 
 
-let data = "[1,2,[3,4,[5,[6]]]]"
-//let data = "[1,2,[3,4,5,[6]]]]" // error data
-data = data.replace(/,/g, '');
-const tokenList = data.split('');
-const answer = {
-  startBracketNumber : 0,
-  endBracktetNumber : 0,
-  elementNumber : 0,
-  elements : [],
-}
-
-
-// 배열을 이용한 문제 풀이
-/*
-getNumbers(tokenList);
-console.log(answer);
-
-function getNumbers(tokenList) {
-  tokenList.forEach((token) => {
-    if (token === '[') {
-      answer.startBracketNumber++;
-    } else if (token === ']') {
-      answer.endBracktetNumber++;
-    } else if (token !== '[' && token !== ']') {
-      answer.elementNumber++;
-    }
-  });
-  findError();
-};
-
-function findError() {
-  if (answer.startBracketNumber !== answer.endBracktetNumber) {
-    throw SyntaxError ('닫는 괄호가 일치하지 않습니다!');
-  }
-}
-
-*/
-
-
-// stack을 이용한 문제 풀이
 class Stack {
   constructor(array) {
     this.elements = [];
@@ -68,63 +28,39 @@ class Stack {
   }
 }
 
-let myStack = new Stack();
-tokenList.forEach((token) => {
-  myStack.push(token);
-});
-
-function findArray(stack) {
-  let copiedStack = new Stack(stack.copy());
-  getArray(copiedStack);
+let data = '[1,2,[3,4,[5,[6]]]]'
+//let data = '[1,2,[3,4,5,[6]]]]' // error data
+data = data.replace(/\[/g,'[,').replace(/\]/g, ',]');
+const tokenList = data.split(',');
+const answer = {
+  startBracketNumber : 0,
+  endBracktetNumber : 0,
+  elementNumber : 0,
 }
 
-function getArray(stack) {
-  const stackLength = stack.elements.length
-  for (let i = 0; i < stackLength; i++) {
-    let stackElement = stack.pop();
-    if (stackElement === '[') {
+let stack = new Stack();
+getBracketNumber();
+console.log(stack);
+
+function getBracketNumber() {
+  tokenList.forEach((token) => {
+    stack.push(token);
+    if (token === '[') {
       answer.startBracketNumber++;
-    } else if (stackElement === ']') {
+    } else if (token === ']') {
       answer.endBracktetNumber++;
-    } else if (stackElement !== '[' && stackElement !== ']') {
+    } else {
       answer.elementNumber++;
     }
-  }
-  findError();
+  });
+  printMessage();
+  return stack;
 }
 
-function findError() {
-  if (answer.startBracketNumber !== answer.endBracktetNumber) {
-    throw SyntaxError ('닫는 괄호가 일치하지 않습니다!');
+function printMessage() {
+  if (answer.startBracketNumber === answer.endBracktetNumber) {
+    console.log(`배열의 중첩된 깊이 수준은 ${answer.endBracktetNumber}이며, 총 ${answer.elementNumber}개의 원소가 포함되어 있습니다.`)
+  } else {
+    throw SyntaxError ('괄호 수가 일치하지 않습니다!');
   }
 }
-
-//console.log(myStack);
-findArray(myStack);
-console.log(answer);
-
-
-// stack, 재귀를 이용한 문제 풀이(미완성)
-/*
-function getArray(stack) {
-  let isEnd = false;
-  while (!isEnd) {
-    const stackElement = stack.pop();
-    if (stackElement === '[') {
-      answer.startBracketNumber++;
-      return;
-    } else if (stackElement === ']') {
-      answer.endBracktetNumber++;
-      poppedStack = stack;
-      getArray(poppedStack);
-      return;
-    } else if (stackElement !== '[' && stackElement !== ']') {
-      answer.elementNumber++;
-      answer.elements.push(stackElement);
-    } else if (!stackElement) {
-      isEnd = true;
-      return;
-    }
-  }
-}
-*/
