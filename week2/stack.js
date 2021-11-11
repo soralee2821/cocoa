@@ -3,6 +3,7 @@
 // [V] 괄호의 갯수를 파악하여, 매칭에 문제가 있는 경우 오류내용 출력하기
 // [] 배열 분석 정보를 출력하기
 
+
 let data = "[1,2,[3,4,[5,[6]]]]"
 //let data = "[1,2,[3,4,5,[6]]]]" // error data
 data = data.replace(/,/g, '');
@@ -14,6 +15,9 @@ const answer = {
   elements : [],
 }
 
+
+// 배열을 이용한 문제 풀이
+/*
 getNumbers(tokenList);
 console.log(answer);
 
@@ -36,6 +40,10 @@ function findError() {
   }
 }
 
+*/
+
+
+// stack을 이용한 문제 풀이
 class Stack {
   constructor(array) {
     this.elements = [];
@@ -70,8 +78,34 @@ function findArray(stack) {
   getArray(copiedStack);
 }
 
+function getArray(stack) {
+  const stackLength = stack.elements.length
+  for (let i = 0; i < stackLength; i++) {
+    let stackElement = stack.pop();
+    if (stackElement === '[') {
+      answer.startBracketNumber++;
+    } else if (stackElement === ']') {
+      answer.endBracktetNumber++;
+    } else if (stackElement !== '[' && stackElement !== ']') {
+      answer.elementNumber++;
+    }
+  }
+  findError();
+}
+
+function findError() {
+  if (answer.startBracketNumber !== answer.endBracktetNumber) {
+    throw SyntaxError ('닫는 괄호가 일치하지 않습니다!');
+  }
+}
+
+//console.log(myStack);
+findArray(myStack);
+console.log(answer);
+
+
+// stack, 재귀를 이용한 문제 풀이(미완성)
 /*
-// stack을 이용한 문제 풀이(미완성)
 function getArray(stack) {
   let isEnd = false;
   while (!isEnd) {
@@ -93,21 +127,4 @@ function getArray(stack) {
     }
   }
 }
-
-function getArray(stack) {
-  for (let i = 0; i < stack.elements.length; i++) {
-    const stackElement = stack.pop();
-    if (stackElement === '[') {
-      answer.startBracketNumber++;
-    } else if (stackElement === ']') {
-      answer.endBracktetNumber++;
-    } else if (stackElement !== '[' && stackElement !== ']') {
-      answer.elementNumber++;
-    }
-  }
-}
-
-//console.log(myStack);
-findArray(myStack);
-console.log(answer);
 */
