@@ -28,8 +28,9 @@ class Stack {
   }
 }
 
-let data = '[1,2,[3,4,[5,[6]]]]'
-//let data = '[1,2,[3,4,5,[6]]]]' // error data
+let data = '[1,2,[3,4,[5,[6]]]]';
+//let data = '[1,2,[3,4,5,[6]]]]'; // error data
+//let data = '[1,2,[3,4,[5,[6], 7], 8]]';
 data = data.replace(/\[/g,'[,').replace(/\]/g, ',]');
 const tokenList = data.split(',');
 const answer = {
@@ -40,7 +41,7 @@ const answer = {
 
 let stack = new Stack();
 getBracketNumber();
-console.log(stack);
+//console.log(stack);
 
 function getBracketNumber() {
   tokenList.forEach((token) => {
@@ -63,4 +64,63 @@ function printMessage() {
   } else {
     throw SyntaxError ('괄호 수가 일치하지 않습니다!');
   }
+}
+
+const result = {
+  type : 'root',
+  child : [],
+};
+
+
+const lexeredResult = lexer(tokenizer(stack.elements));
+console.log(lexeredResult);
+let parsedResult = parser(lexeredResult);
+parsedResult = JSON.stringify(parsedResult, null, 2);
+console.log(parsedResult);
+
+function tokenizer(stack) {
+  const stringfiedStack = JSON.stringify(stack).split('"');
+  stringfiedStack.splice(0,1);
+  stringfiedStack.splice(stringfiedStack.length-1,1);
+  return stringfiedStack;
+}
+
+function lexer(tokenizedStack) {
+  const regExp = /[0-9]/g;
+  const lexeredStack = [];
+  tokenizedStack.forEach((token) => {
+    if (token === '[') {
+      token = {
+        type : 'array',
+        child : [],
+      };
+      lexeredStack.push(token);
+    } else if (token === ']') {
+      token = {
+        type : 'array_end'
+      };
+      lexeredStack.push(token);
+    } else if (token.match(regExp)) {
+      token = {
+        type : 'number',
+        value : token,
+        child : [],
+      };
+      lexeredStack.push(token);
+    }
+  });
+  return lexeredStack;
+}
+
+function parser(lexeredStack) {
+  let currentArray = result;
+  lexeredStack.forEach((currentStack) => {
+    if (currentStack.type === 'array') {
+      currentArray.child.push(currentStack);
+      currentArray = currentStack;
+    } else if (currentStack.type === 'number') {
+      currentArray.child.push(currentStack);
+    }
+  });
+  return result;
 }
