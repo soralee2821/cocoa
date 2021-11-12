@@ -1,7 +1,7 @@
 // 배열 모양 문자열을 파싱하는 미션
 // [V] 배열의 중첩된 깊이와 원소 갯수를 출력하기
 // [V] 괄호의 갯수를 파악하여, 매칭에 문제가 있는 경우 오류내용 출력하기
-// [] 배열 분석 정보를 출력하기
+// [V] 배열 분석 정보를 출력하기
 
 
 class Stack {
@@ -30,7 +30,7 @@ class Stack {
 
 let data = '[1,2,[3,4,[5,[6]]]]';
 //let data = '[1,2,[3,4,5,[6]]]]'; // error data
-//let data = '[1,2,[3,4,[5,[6], 7], 8]]';
+//let data = '[1,2,[3,4,[5,[6], 7], 8]]'; // 해결중
 data = data.replace(/\[/g,'[,').replace(/\]/g, ',]');
 const tokenList = data.split(',');
 const answer = {
@@ -41,7 +41,6 @@ const answer = {
 
 let stack = new Stack();
 getBracketNumber();
-//console.log(stack);
 
 function getBracketNumber() {
   tokenList.forEach((token) => {
@@ -73,7 +72,6 @@ const result = {
 
 
 const lexeredResult = lexer(tokenizer(stack.elements));
-console.log(lexeredResult);
 let parsedResult = parser(lexeredResult);
 parsedResult = JSON.stringify(parsedResult, null, 2);
 console.log(parsedResult);
