@@ -2,6 +2,7 @@
 // [V] 배열의 중첩된 깊이와 원소 갯수를 출력하기
 // [V] 괄호의 갯수를 파악하여, 매칭에 문제가 있는 경우 오류내용 출력하기
 // [V] 배열 분석 정보를 출력하기
+// [] stack 활용해서 문제 풀기
 
 
 class Stack {
@@ -39,12 +40,10 @@ const answer = {
   elementNumber : 0,
 }
 
-let stack = new Stack();
 getBracketNumber();
 
 function getBracketNumber() {
   tokenList.forEach((token) => {
-    stack.push(token);
     if (token === '[') {
       answer.startBracketNumber++;
     } else if (token === ']') {
@@ -54,7 +53,6 @@ function getBracketNumber() {
     }
   });
   printMessage();
-  return stack;
 }
 
 function printMessage() {
@@ -70,16 +68,16 @@ const result = {
   child : [],
 };
 
-
-const lexeredResult = lexer(tokenizer(stack.elements));
+const tokenizedResult = tokenizer(tokenList);
+const lexeredResult = lexer(tokenizedResult);
 let parsedResult = parser(lexeredResult);
 parsedResult = JSON.stringify(parsedResult, null, 2);
 console.log(parsedResult);
 
 function tokenizer(stack) {
   const stringfiedStack = JSON.stringify(stack).split('"');
-  stringfiedStack.splice(0,1);
-  stringfiedStack.splice(stringfiedStack.length-1,1);
+  stringfiedStack.splice(0,1); // [ 제거
+  stringfiedStack.splice(stringfiedStack.length-1,1); // ] 제거
   return stringfiedStack;
 }
 
