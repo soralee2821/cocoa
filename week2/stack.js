@@ -109,20 +109,20 @@ function lexer(tokenizedStack) {
 }
 
 function parser(lexeredStack) {
-  let currentArray = result;
-  let beforeArray = [];
+  let currentPosition = result;
+  let beforePosition = [];
   let arrayDepth = 0;
 
   lexeredStack.forEach((currentStack) => {
     if (currentStack.type === 'array') {
-      beforeArray.push(currentArray);
-      currentArray.child.push(currentStack);
-      currentArray = currentStack;
+      beforePosition.push(currentPosition);
+      currentPosition.child.push(currentStack);
+      currentPosition = currentStack;
       arrayDepth++;
     } else if (currentStack.type === 'number') {
-      currentArray.child.push(currentStack);
+      currentPosition.child.push(currentStack);
     } else if (currentStack.type === 'array_end') {
-      currentArray = beforeArray[arrayDepth - 1];
+      currentPosition = beforePosition[arrayDepth - 1];
       arrayDepth--;
     }
   });
