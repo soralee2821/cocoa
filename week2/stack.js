@@ -31,7 +31,7 @@ class Stack {
 
 let data = '[1,2,[3,4,[5,[6]]]]';
 //let data = '[1,2,[3,4,5,[6]]]]'; // error data
-//let data = '[1,2,[3,4,[5,[6], 7], 8]]'; // 해결중
+//let data = '[1,2,[3,4,[5,[6], 7], 8, 9], 10]'; // mixed constructure data
 data = data.replace(/\[/g,'[,').replace(/\]/g, ',]');
 const tokenList = data.split(',');
 const answer = {
@@ -110,12 +110,20 @@ function lexer(tokenizedStack) {
 
 function parser(lexeredStack) {
   let currentArray = result;
+  let beforeArray = [];
+  let arrayDepth = 0;
+
   lexeredStack.forEach((currentStack) => {
     if (currentStack.type === 'array') {
+      beforeArray.push(currentArray);
       currentArray.child.push(currentStack);
       currentArray = currentStack;
+      arrayDepth++;
     } else if (currentStack.type === 'number') {
       currentArray.child.push(currentStack);
+    } else if (currentStack.type === 'array_end') {
+      currentArray = beforeArray[arrayDepth - 1];
+      arrayDepth--;
     }
   });
   return result;
