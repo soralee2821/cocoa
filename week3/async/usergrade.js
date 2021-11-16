@@ -6,6 +6,11 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+const grade = {
+  korean : [],
+  math : [],
+  english : [],
+}
 let koreanArray = [];
 let mathArray = [];
 let englishArray = [];
@@ -14,11 +19,11 @@ const question1 = () => {
   return new Promise((resolve, reject) => {
     rl.question('What is your subject? ', (answer) => {
       if (answer === 'korean' || answer === 'Korean') {
-        resolve(koreanArray);
+        resolve(grade.korean);
       } else if (answer === 'math' || answer === 'Math') {
-        resolve(mathArray);
+        resolve(grade.math);
       } else if (answer === 'english' || answer === 'English') {
-        resolve(englishArray);
+        resolve(grade.english);
       }
     });
   });
@@ -28,7 +33,7 @@ const question2 = (array) => {
   return new Promise((resolve, reject) => {
     rl.question('What is your grade? ', (answer) => {
       array.push(+answer);
-      resolve(array);
+      resolve(grade);
     })
   })
 }
