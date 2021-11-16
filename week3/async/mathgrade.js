@@ -42,16 +42,20 @@ export default class GradeProgram {
   ];
 
   getMean() {
-    return this.array.reduce((a, b) => a + b) / this.array.length;
+    const mean = this.array.reduce((a, b) => a + b) / this.array.length;
+    return mean;
   }
   getDispersion() {
-    return this.array.map(x => Math.pow(x - this.getMean(), 2)).reduce((a, b) => a + b) / this.array.length;
+    const dispersion = this.array.map(x => Math.pow(x - this.getMean(), 2)).reduce((a, b) => a + b) / this.array.length;
+    return dispersion;
   }
   getStandardDeviation() {
-    return Math.sqrt(this.getDispersion());
+    const standardDeviation = Math.sqrt(this.getDispersion());
+    return standardDeviation;
   }
   getZscore(grade) {
-    return (grade - this.getMean()) / this.getStandardDeviation();
+    const Zscore = (grade - this.getMean()) / this.getStandardDeviation();
+    return Zscore;
   }
   getPercentage(grade1, grade2) {
     const Zscore1 = Number(this.getZscore(grade1).toFixed(2));
@@ -66,7 +70,8 @@ export default class GradeProgram {
 
     function getProbability(Zscore) {
       const tableIndex = findIndex(Zscore);
-      return GradeProgram.SNDtable[tableIndex[0]][tableIndex[1]];
+      const probability = GradeProgram.SNDtable[tableIndex[0]][tableIndex[1]];
+      return probability;
     }
 
     function calculatePercentage(Zscore1, Zscore2) {
