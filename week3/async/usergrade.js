@@ -22,7 +22,7 @@ const question1 = () => {
       }
     });
   });
-};
+}
 
 const question2 = (array) => {
   return new Promise((resolve, reject) => {
@@ -36,7 +36,11 @@ const question2 = (array) => {
 const main = async () => {
   let gradeArray = await question1().then(question2);
   console.log(gradeArray);
-  rl.close()
 }
 
-main();
+const excute = async () => {
+  await main().then(main);
+  rl.close();
+}
+
+excute();
