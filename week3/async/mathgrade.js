@@ -72,11 +72,11 @@ export default class GradeProgram {
     function calculatePercentage(Zscore1, Zscore2) {
       let percentage = 0;
       if (Math.sign(Zscore1) !== Math.sign(Zscore2)) {
-        percentage = (Zscore1 + Zscore2 - 1) * 100;
+        percentage = (getProbability(Zscore1) + getProbability(Zscore2) - 1) * 100;
       } else {
-        percentage = Math.abs(Zscore1 - Zscore2) * 100;
+        percentage = Math.abs(getProbability(Zscore1) - getProbability(Zscore2)) * 100;
       }
-      return `${percentage}%`
+      return `${percentage.toFixed(2)}%`
     }
     return calculatePercentage(Zscore1, Zscore2);
   }
@@ -88,7 +88,7 @@ console.log("average : ", mathGrade.getMean().toFixed(2));
 console.log("standard deviation : ", mathGrade.getStandardDeviation().toFixed(2));
 console.log("Z-score 70 : ", mathGrade.getZscore(70).toFixed(2));
 console.log("Z-score 80 : ", mathGrade.getZscore(80).toFixed(2));
-console.log(mathGrade.getPercentage(70, 80));
+console.log("probability from 70 to 80 : ", mathGrade.getPercentage(70, 80));
 }
 
 const gradeArray = [89.23, 82.03, 71.56, 78.82, 85.05, 84.44, 67.53, 71.7, 77.97, 73.77, 84.25, 67.01, 73.78, 64.19, 89.89, 90.32, 73.21, 75.35, 83.22, 74.01];
