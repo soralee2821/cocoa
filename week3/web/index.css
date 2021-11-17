@@ -1,0 +1,48 @@
+* {margin: 0; padding: 0;}
+
+header {
+  margin: 0 auto;
+  padding: 0.5 rem;
+  text-align: center;
+  font-size: medium;
+  color: white;
+  background-color: aqua;
+}
+
+#input-div {
+  padding: 3rem;
+  text-align: center;
+}
+
+#new-task {
+  width: max-content;
+  height: 2rem;
+  margin: 0 auto;
+}
+
+#add-button {
+  width: 2.25rem;
+  height: 2rem;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.garbage-button > img {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.invisible {
+  display: none;
+}
