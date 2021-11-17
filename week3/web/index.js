@@ -26,7 +26,7 @@ addButton.addEventListener("click", () => {
 });
 
 function makeList(taskContent) {
-  const tasklist = document.createElement("list");
+  const tasklist = document.createElement("li");
   tasklist.classList.add("task-list");
   tasklist.innerHTML = putContent(taskContent);
   listNode.appendChild(tasklist);
