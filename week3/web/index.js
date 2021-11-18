@@ -10,52 +10,57 @@
 [V] 휴지통을 누르면 삭제
   -> 휴지통 버튼 만들기 V
   -> 휴지통을 클릭했을 때, 해당 리스트를 삭제하기 (remove 메소드 사용) V
-[] 그 외의 필요한 기능을 추가 (optional)
+[V] function들을 class화 하기
 */
 
-const $todoList = document.getElementById("todo-list");
-const $addButton = document.getElementById("add-button");
-const $newTaskInput = document.getElementById("new-task");
-let taskContent = "";
+class TodoListManager {
+  constructor(taskContent) {
+    this.taskContent = taskContent;
+  }
 
-$addButton.addEventListener("click", () => {
-  taskContent = $newTaskInput.value;
-  makeList(taskContent);
-  $newTaskInput.value = "";
-});
+  makeList() {
+    const $todoList = document.getElementById("todo-list");
+    const tasklist = document.createElement("li");
+    tasklist.classList.add("task-list");
+    tasklist.innerHTML = this.putContent(this.taskContent);
+    $todoList.appendChild(tasklist);
+    return this.putEventListener(tasklist);
+  }
 
-function makeList(taskContent) {
-  const tasklist = document.createElement("li");
-  tasklist.classList.add("task-list");
-  tasklist.innerHTML = putContent(taskContent);
-  $todoList.appendChild(tasklist);
-  putEventListener(tasklist);
-}
+  putContent() {
+    return `<input type="checkbox" name="checkbox"/>
+    ${this.taskContent}
+    <button class="garbage-button"><img src="../image/garbage.jpg" alt="grabage-image" /></button>`;
+  }
 
+  putEventListener(tasklist) {
+    const checkbox = tasklist.children[0];
+    const garbageButton = tasklist.children[1];
+    checkbox.addEventListener("change", this.findcheckedList);
+    garbageButton.addEventListener("click", this.deleteList);
+  }
 
-function putContent(taskContent) {
-  return `<input type="checkbox" name="checkbox"/>
-  ${taskContent}
-  <button class="garbage-button"><img src="../image/garbage.jpg" alt="grabage-image" /></button>`;
-}
+  findcheckedList(event) {
+    const checkbox = event.target;
+    if (checkbox.checked) {
+      checkbox.parentElement.classList.add("line-through");
+    } else {
+      checkbox.parentElement.classList.remove("line-through");
+    }
+  }
 
-function putEventListener(tasklist) {
-  const checkbox = tasklist.children[0];
-  const garbageButton = tasklist.children[1];
-  checkbox.addEventListener("change", findcheckedList);
-  garbageButton.addEventListener("click", deleteList);
-}
-
-function findcheckedList(event) {
-  const checkbox = event.target;
-  if (checkbox.checked) {
-    checkbox.parentElement.classList.add("line-through");
-  } else {
-    checkbox.parentElement.classList.remove("line-through");
+  deleteList(event) {
+    const garbageButton = event.target;
+    garbageButton.parentElement.parentElement.remove();
   }
 }
 
-function deleteList(event) {
-  const garbageButton = event.target;
-  garbageButton.parentElement.parentElement.remove();
-}
+const $addButton = document.getElementById("add-button");
+const $newTaskInput = document.getElementById("new-task");
+
+$addButton.addEventListener("click", () => {
+  const taskContent = $newTaskInput.value;
+  const todoListManager = new TodoListManager(taskContent);
+  todoListManager.makeList(taskContent);
+  $newTaskInput.value = "";
+});
