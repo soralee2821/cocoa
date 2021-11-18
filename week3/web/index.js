@@ -12,43 +12,37 @@
   -> 휴지통을 클릭했을 때, 해당 리스트를 삭제하기 (display : none 활용) V
 [] 그 외의 필요한 기능을 추가 (optional)
 */
- 
-const divNode = document.querySelector("#list-div");
-const listNode = document.querySelector("#todo-list");
-const addButton = document.querySelector("#add-button");
-const inputNode = document.querySelector("input[name='new-task']");
+
+const $todoList = document.getElementById("todo-list");
+const $addButton = document.getElementById("add-button");
+const $newTaskInput = document.getElementById("new-task");
 let taskContent = "";
 
-addButton.addEventListener("click", () => {
-  taskContent = inputNode.value;
+$addButton.addEventListener("click", () => {
+  taskContent = $newTaskInput.value;
   makeList(taskContent);
-  inputNode.value = "";
+  $newTaskInput.value = "";
 });
 
 function makeList(taskContent) {
   const tasklist = document.createElement("li");
   tasklist.classList.add("task-list");
   tasklist.innerHTML = putContent(taskContent);
-  listNode.appendChild(tasklist);
-  checkChange();
+  $todoList.appendChild(tasklist);
+  putEventListener(tasklist);
+}
+
+function putEventListener(tasklist) {
+  const checkbox = tasklist.children[0];
+  const garbageButton = tasklist.children[1];
+  checkbox.addEventListener("change", findcheckedList);
+  garbageButton.addEventListener("click", deleteList);
 }
 
 function putContent(taskContent) {
   return `<input type="checkbox" name="checkbox"/>
   ${taskContent}
   <button class="garbage-button"><img src="../image/garbage.jpg" alt="grabage-image" /></button>`;
-}
-
-function checkChange() {
-  lineThroughList();
-  deleteList();
-}
-
-function lineThroughList() {
-  let checkboxes = document.querySelectorAll("input[name='checkbox']");
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", findcheckedList);
-  });
 }
 
 function findcheckedList(event) {
@@ -60,11 +54,7 @@ function findcheckedList(event) {
   }
 }
 
-function deleteList() {
-  let garbageButtons = document.querySelectorAll(".garbage-button");
-  garbageButtons.forEach((garbageButton) => {
-    garbageButton.addEventListener("click", () => {
-      garbageButton.parentElement.classList.add("invisible");
-    })
-  })
+function deleteList(event) {
+  const garbageButton = event.target;
+  garbageButton.parentElement.parentElement.remove();
 }
