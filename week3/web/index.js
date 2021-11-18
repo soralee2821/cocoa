@@ -32,17 +32,18 @@ function makeList(taskContent) {
   putEventListener(tasklist);
 }
 
-function putEventListener(tasklist) {
-  const checkbox = tasklist.children[0];
-  const garbageButton = tasklist.children[1];
-  checkbox.addEventListener("change", findcheckedList);
-  garbageButton.addEventListener("click", deleteList);
-}
 
 function putContent(taskContent) {
   return `<input type="checkbox" name="checkbox"/>
   ${taskContent}
   <button class="garbage-button"><img src="../image/garbage.jpg" alt="grabage-image" /></button>`;
+}
+
+function putEventListener(tasklist) {
+  const checkbox = tasklist.children[0];
+  const garbageButton = tasklist.children[1];
+  checkbox.addEventListener("change", findcheckedList);
+  garbageButton.addEventListener("click", deleteList);
 }
 
 function findcheckedList(event) {
