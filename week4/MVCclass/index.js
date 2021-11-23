@@ -36,7 +36,6 @@ class TodoModel {
 class TodoView {
   constructor(model) {
     this.model = model;
-    this.$todoList = document.getElementById("todo-list");
   }
   createElement(tag, className) {
     const $element = document.createElement(tag);
@@ -45,6 +44,7 @@ class TodoView {
   }
 
   displayTodo(todo) {
+    const $todoList = document.getElementById("todo-list");
     const taskList = this.createElement("li", "task-list");
 
     const checkbox = this.createElement("input");
@@ -61,7 +61,7 @@ class TodoView {
     garbageButton.append(garbageImage);
 
     taskList.append(checkbox, span, garbageButton);
-    this.$todoList.append(taskList);
+    $todoList.append(taskList);
   }
 }
 
