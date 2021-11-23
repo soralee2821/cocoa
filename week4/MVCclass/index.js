@@ -1,5 +1,5 @@
 /*
-[] Model, View, Controller Class로 나누기
+[V] Model, View, Controller Class로 나누기
 [] 수정 기능 추가
 [] 할일 목록, 한일 목록으로 나누기
 [] 날짜별 ToDo 보는 기능 만들기
@@ -18,6 +18,7 @@ class TodoModel {
       complete: false,
     }
     this.todos.push(todo);
+    return todo;
   }
 
   editTodo(id, updatedText) {
@@ -33,6 +34,10 @@ class TodoModel {
 }
 
 class TodoView {
+  constructor(model) {
+    this.model = model;
+    this.$todoList = document.getElementById("todo-list");
+  }
   createElement(tag, className) {
     const $element = document.createElement(tag);
     if (className) $element.classList.add(className);
@@ -40,7 +45,6 @@ class TodoView {
   }
 
   displayTodo(todo) {
-    const $todoList = getElementById("todo-list");
     const taskList = this.createElement("li", "task-list");
 
     const checkbox = this.createElement("input");
@@ -57,7 +61,7 @@ class TodoView {
     garbageButton.append(garbageImage);
 
     taskList.append(checkbox, span, garbageButton);
-    $todoList.append(taskList);
+    this.$todoList.append(taskList);
   }
 }
 
@@ -67,12 +71,13 @@ class TodoController {
     this.view = view;
   }
 
+  initTodo(todo) {
+    this.view.displayTodo(todo);
+    this.handleCheckTodo(todo);
+    this.handleDeleteTodo(todo);
+  }
   displayTodoList() {
-    this.model.todos.forEach((todo) => {
-      this.view.displayTodo(todo);
-      this.handleCheckTodo(todo);
-      this.handleDeleteTodo(todo);
-    });
+    this.model.todos.forEach((todo) => this.initTodo(todo));
   }
 
   handleAddTodo() {
@@ -80,6 +85,8 @@ class TodoController {
     $addButton.addEventListener("click", () => {
       const $newTaskInput = document.getElementById("new-task");
       this.model.addTodo($newTaskInput.value);
+      const newTodo = this.model.todos[this.model.todos.length -1];
+      this.initTodo(newTodo);
     })
   }
 
@@ -101,7 +108,7 @@ class TodoController {
 }
 
 const model = new TodoModel();
-const view = new TodoView();
+const view = new TodoView(model);
 const controller = new TodoController(model, view);
 controller.displayTodoList();
 controller.handleAddTodo();
