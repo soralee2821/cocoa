@@ -7,6 +7,13 @@ header {
   background-color: aqua;
 }
 
+h2 {
+  display: inline;
+  padding: 0.15rem;
+  color: white;
+  background-color: aqua;
+}
+
 #new-task {
   width: max-content;
   height: 2rem;
@@ -24,8 +31,11 @@ header {
 }
 
 .list-div {
-  padding: 0.5rem;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0;
   text-align: center;
+  border: 1px solid aqua;
 }
 
 .task-list {
