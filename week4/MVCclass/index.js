@@ -1,6 +1,6 @@
 /*
 [V] Model, View, Controller Class로 나누기
-[] 수정 기능 추가
+[V] 수정 기능 추가
 [] 할일 목록, 한일 목록으로 나누기
 [] 날짜별 ToDo 보는 기능 만들기
 [] CSS - 레이어 카드 UI로 만들기
@@ -22,8 +22,10 @@ class TodoModel {
   }
 
   editTodo(id, updatedText) {
-    this.todos = this.todos.map((todo) => {
-      todo.id === id ? {id: todo.id, text, updatedText, complete: false} : todo;
+    this.todos.map((todo) => {
+      if (todo.id === id) {
+        return todo.text = updatedText;
+      }
     });
   }
 
@@ -34,8 +36,9 @@ class TodoModel {
 }
 
 class TodoView {
-  constructor(model) {
+  constructor({model, $todoList}) {
     this.model = model;
+    this.$todoList = $todoList;
   }
   createElement(tag, className) {
     const $element = document.createElement(tag);
@@ -44,24 +47,18 @@ class TodoView {
   }
 
   displayTodo(todo) {
-    const $todoList = document.getElementById("todo-list");
-    const taskList = this.createElement("li", "task-list");
+    const $taskList = this.createElement("li", "task-list");
+    $taskList.innerHTML = `<input type="checkbox" id="checkbox${todo.id}"/>
+    <span>${todo.text}</span>
+    <button id="modify-button${todo.id}" class="modify-button"> 수정 </button>
+    <button id="garbage-button${todo.id}" class="garbage-button"><img src="../image/garbage.jpg" alt="grabage-image" /></button>`;
+    this.$todoList.append($taskList);
+  }
 
-    const checkbox = this.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.checked = todo.complete;
-
-    const span = this.createElement("span");
-    span.value = todo.text;
-
-    const garbageButton = this.createElement("button", "garbage-button");
-    const garbageImage = this.createElement("img");
-    garbageImage.src = "../image/garbage.jpg";
-    garbageImage.alt = "garbage-image";
-    garbageButton.append(garbageImage);
-
-    taskList.append(checkbox, span, garbageButton);
-    $todoList.append(taskList);
+  renderTodo(newTodoText) {
+    const newTodo = this.model.addTodo(newTodoText);
+    this.displayTodo(newTodo);
+    return newTodo;
   }
 }
 
@@ -71,44 +68,71 @@ class TodoController {
     this.view = view;
   }
 
-  initTodo(todo) {
-    this.view.displayTodo(todo);
-    this.handleCheckTodo(todo);
-    this.handleDeleteTodo(todo);
-  }
   displayTodoList() {
-    this.model.todos.forEach((todo) => this.initTodo(todo));
+    this.model.todos.forEach((todo) => {
+      this.view.displayTodo(todo);
+      this.bindTodo(todo);
+    });
+  }
+
+  bindTodo(todo) {
+    this.handleCheckTodo(todo);
+    this.handleModifyTodo(todo);
+    this.handleDeleteTodo(todo);
   }
 
   handleAddTodo() {
     const $addButton = document.getElementById("add-button");
     $addButton.addEventListener("click", () => {
-      const $newTaskInput = document.getElementById("new-task");
-      this.model.addTodo($newTaskInput.value);
-      const newTodo = this.model.todos[this.model.todos.length -1];
-      this.initTodo(newTodo);
+      const $inputTask = document.getElementById("new-task");
+      const newTodo = this.view.renderTodo($inputTask.value);
+      this.bindTodo(newTodo);
+      $inputTask.innerHTML = "";
     })
   }
 
   handleCheckTodo(todo) {
-    const checkbox = todo.children[0];
-    checkbox.addEventListener("change", () => {
-      if (checkbox.checked) {
-        checkbox.parentElement.classList.add("line-through");
+    const checkboxID = `checkbox${todo.id}`;
+    const $checkbox = document.getElementById(checkboxID);
+    $checkbox.addEventListener("change", () => {
+      const checkedTodo = $checkbox.parentElement.children[1];
+      if ($checkbox.checked) {
+        checkedTodo.classList.add("line-through");
       } else {
-        checkbox.parentElement.classList.remove("line-through");
+        checkedTodo.classList.remove("line-through");
       }
+    });
+  }
+
+  handleModifyTodo(todo) {
+    const id = todo.id;
+    const buttonID = `modify-button${id}`;
+    const $modifyButton = document.getElementById(buttonID);
+    $modifyButton.addEventListener("click", () => {
+      const modifiedtodo = $modifyButton.parentElement.children[1];
+      modifiedtodo.contentEditable = true;
+      modifiedtodo.addEventListener("focusout", (event) => {
+        modifiedtodo.contentEditable = false;
+        this.model.editTodo(id, event.target.innerText);
+      })
     });
   }
 
   handleDeleteTodo(todo) {
     const id = todo.id;
-    this.model.deleteTodo(id);
+    const buttonID = `garbage-button${id}`;
+    const $garbageButton = document.getElementById(buttonID);
+    $garbageButton.addEventListener("click", () => {
+      $garbageButton.parentElement.remove();
+      this.model.deleteTodo(id);
+    })
   }
 }
 
+const $todoList = document.getElementById("todo-list");
+
 const model = new TodoModel();
-const view = new TodoView(model);
+const view = new TodoView({model, $todoList});
 const controller = new TodoController(model, view);
 controller.displayTodoList();
 controller.handleAddTodo();
