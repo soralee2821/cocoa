@@ -1,7 +1,7 @@
 /*
 [V] Model, View, Controller Class로 나누기
 [V] 수정 기능 추가
-[] 할일 목록, 한일 목록으로 나누기
+[V] 할일 목록, 한일 목록으로 나누기
 [] 날짜별 ToDo 보는 기능 만들기
 [] CSS - 레이어 카드 UI로 만들기
 */
@@ -39,6 +39,7 @@ class TodoView {
   constructor({model, $todoList}) {
     this.model = model;
     this.$todoList = $todoList;
+    this.$completeTodoList = $completeTodoList;
   }
   createElement(tag, className) {
     const $element = document.createElement(tag);
@@ -95,11 +96,11 @@ class TodoController {
     const checkboxID = `checkbox${todo.id}`;
     const $checkbox = document.getElementById(checkboxID);
     $checkbox.addEventListener("change", () => {
-      const checkedTodo = $checkbox.parentElement.children[1];
+      const checkedTodo = $checkbox.parentElement;
       if ($checkbox.checked) {
-        checkedTodo.classList.add("line-through");
+        $completeTodoList.append(checkedTodo);
       } else {
-        checkedTodo.classList.remove("line-through");
+        $todoList.append(checkedTodo);
       }
     });
   }
@@ -130,9 +131,10 @@ class TodoController {
 }
 
 const $todoList = document.getElementById("todo-list");
+const $completeTodoList = document.getElementById("complete-todo-list");
 
 const model = new TodoModel();
-const view = new TodoView({model, $todoList});
+const view = new TodoView({model, $todoList, $completeTodoList});
 const controller = new TodoController(model, view);
 controller.displayTodoList();
 controller.handleAddTodo();

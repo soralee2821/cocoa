@@ -7,11 +7,6 @@ header {
   background-color: aqua;
 }
 
-#input-div {
-  padding: 3rem;
-  text-align: center;
-}
-
 #new-task {
   width: max-content;
   height: 2rem;
@@ -21,6 +16,16 @@ header {
 #add-button {
   width: 2.25rem;
   height: 2rem;
+}
+
+.input-div {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.list-div {
+  padding: 0.5rem;
+  text-align: center;
 }
 
 .task-list {
