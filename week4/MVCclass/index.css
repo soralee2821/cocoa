@@ -31,7 +31,9 @@ h2 {
 }
 
 .list-div {
+  width: 70%;
   padding: 1rem;
+  margin: 0 auto;
   border-radius: 10px;
   box-shadow: 0 2px 4px 0;
   text-align: center;
