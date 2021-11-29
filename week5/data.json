@@ -1,0 +1,90 @@
+[{
+  "id": 1,
+  "name": "모던 자바스크립트 deep dive",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 2,
+  "name": "자바스크립트로 배우는 웹 프로그래밍 A to Z",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 3,
+  "name": "프론트엔드 개발자를 위한 자바스크립트 프로그래밍",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 4,
+  "name": "모던 자바스크립트 핵심 가이드",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 5,
+  "name": "러닝 자바스크립트",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 6,
+  "name": "파이썬",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 7,
+  "name": "파이썬 머신러닝 완벽 가이드",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 8,
+  "name": "파이썬 핵심 개발자들과의 인터뷰",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 9,
+  "name": "모두의 알고리즘 with 파이썬",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 10,
+  "name": "파이썬 증권 데이터 분석",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 11,
+  "name": "리액트 교과서",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 12,
+  "name": "리액트를 다루는 기술",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 13,
+  "name": "리액트 네이티브를 다루는 기술",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 14,
+  "name": "Do it! 리액트 네이티브 앱 프로그래밍",
+  "borrowState": true,
+  "returnDate": ""
+},
+{
+  "id": 15,
+  "name": "러닝 리액트",
+  "borrowState": true,
+  "returnDate": ""
+}]
