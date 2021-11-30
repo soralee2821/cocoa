@@ -151,7 +151,7 @@ class LibraryView {
   }
 
   displayBooks(bookList) {
-    bookList = this.model.bookStorage;
+    this.$bookTable.textContent = "";
     const bookContent = Object.keys(bookList[0]);
     const tableHeader = this.makeHTMLElement("tr", "th", bookContent);
     this.$bookTable.append(tableHeader);
@@ -163,18 +163,41 @@ class LibraryView {
 }
 
 class LibraryManager {
-  constructor(model, view) {
+  constructor(model, view, {$findButton, $inputText, $bookTable}) {
   this.model = model;
   this.view = view;
+  this.$findButton = $findButton;
+  this.$inputText = $inputText;
+  this.$bookTable = $bookTable;
+  }
+
+  findBook() {
+    this.$findButton.addEventListener("click", () => {
+      const bookName = this.$inputText.value;
+      let foundBookList = [];
+      this.model.bookStorage.forEach((book) => {
+        if (book.name.includes(bookName)) {
+          return foundBookList.push(book);
+        }
+      });
+      if (foundBookList.length === 0) {
+        this.$bookTable.textContent = "";
+        this.$bookTable.textContent = "검색된 도서가 없습니다";
+      } else {
+        return this.view.displayBooks(foundBookList);
+      }
+    });
   }
 }
 
 //const data = require("./data.json");
 const $displayContainer = document.querySelector(".display-container");
 const $bookTable = document.querySelector(".book-table");
+const $findButton = document.querySelector(".find-button");
+const $inputText = document.querySelector(".input-book-name");
 
 const model = new LibraryModel(data);
 const view = new LibraryView(model, {$bookTable, $displayContainer});
-view.displayBooks();
 
-const libraryManager = new LibraryManager(model, view);
+const manager = new LibraryManager(model, view, {$findButton, $inputText, $bookTable});
+manager.findBook();
