@@ -6,3 +6,14 @@ body {
   border: 1px solid black;
   margin: 10px auto;
 }
+
+.book-image {
+  width: auto;
+  height: auto;
+  max-width: 150px;
+  max-height: 200px;
+}
+
+.invisible {
+  display: none;
+}
