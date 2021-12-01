@@ -208,14 +208,14 @@ class LibraryView {
 }
 
 class LibraryManager {
-  constructor(model, view, {$searchButton, $inputText, $bookTable, $displayContainer, $displayBook}) {
+  constructor(model, view, {$bookTable, $displayContainer, $displayBook, $searchButton, $inputText}) {
   this.model = model;
   this.view = view;
-  this.$searchButton = $searchButton;
-  this.$inputText = $inputText;
   this.$bookTable = $bookTable;
   this.$displayContainer = $displayContainer;
   this.$displayBook = $displayBook;
+  this.$searchButton = $searchButton;
+  this.$inputText = $inputText;
   }
 
   searchBook() {
@@ -264,7 +264,6 @@ class LibraryManager {
     this.model.updateBookState(bookID, "borrowState", "대출중");
     this.model.updateBookState(bookID, "returnDate", returnDate);
     const updatedBook = this.model.pickBook(bookID);
-    console.log(updatedBook);
     this.$displayContainer.classList.toggle("invisible");
     this.$displayBook.classList.toggle("invisible");
     this.view.displaySelectedBook(updatedBook);
@@ -277,10 +276,9 @@ const $displayBook = document.querySelector(".display-book");
 const $bookTable = document.querySelector(".book-table");
 const $searchButton = document.querySelector(".search-button");
 const $inputText = document.querySelector(".input-book-name");
+const DOMgroup = {$bookTable, $displayContainer, $displayBook, $searchButton, $inputText};
 
 const model = new LibraryModel(data);
-const DOMgroup1 = {$bookTable, $displayContainer, $displayBook};
-const view = new LibraryView(model, DOMgroup1);
-const DOMgroup2 = {$searchButton, $inputText, $bookTable, $displayContainer, $displayBook};
-const manager = new LibraryManager(model, view, DOMgroup2);
+const view = new LibraryView(model, DOMgroup);
+const manager = new LibraryManager(model, view, DOMgroup);
 manager.searchBook();
