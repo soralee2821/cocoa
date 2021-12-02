@@ -245,7 +245,6 @@ class LibraryManager {
 
   selectBook($foundBookTable) {
     $foundBookTable.addEventListener("click", (event) => {
-      event.preventDefault();
       const $tableRow = event.target.parentElement;
       const bookID = Number($tableRow.children[0].innerText);
       const selectedBook = this.model.pickBook(bookID);
@@ -270,7 +269,6 @@ class LibraryManager {
   }
 }
 
-//const data = require("./data.json");
 const $displayContainer = document.querySelector(".display-container");
 const $displayBook = document.querySelector(".display-book");
 const $bookTable = document.querySelector(".book-table");
