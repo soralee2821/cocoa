@@ -259,7 +259,7 @@ class LibraryManager {
   borrowBook(event) {
     const bookID = Number(event.target.parentElement.children[0].innerText);
     const borrowTerm = 1000 * 60 * 60 * 24 * 14;
-    const returnDate = new Date(Date.now() + borrowTerm).toISOString().slice(0,10);
+    const returnDate = new Date(Date.now() + borrowTerm).toLocaleDateString('sv-SE');
     this.model.updateBookState(bookID, "borrowState", "대출중");
     this.model.updateBookState(bookID, "returnDate", returnDate);
     const updatedBook = this.model.pickBook(bookID);
