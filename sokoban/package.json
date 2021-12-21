@@ -1,0 +1,20 @@
+{
+  "name": "f60849eea84e350b540bd0bf8694fa6d",
+  "type":"commonjs",
+  "version": "1.0.0",
+  "description": "fs.readFile을 사용해서 txt 파일 읽기\r switch문을 사용해서 string을 숫자로 바꾸기",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gist.github.com/f60849eea84e350b540bd0bf8694fa6d.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gist.github.com/f60849eea84e350b540bd0bf8694fa6d"
+  },
+  "homepage": "https://gist.github.com/f60849eea84e350b540bd0bf8694fa6d"
+}
